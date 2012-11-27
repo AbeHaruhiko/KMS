@@ -11,7 +11,6 @@ import jp.sf.orangesignal.csv.CsvWriter;
 
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
-import org.slim3.util.RequestMap;
 
 public class DownloadCsvController extends Controller {
 
@@ -20,7 +19,7 @@ public class DownloadCsvController extends Controller {
     @Override
     public Navigation run() throws Exception {
     	
-        RequestMap requestMap = new RequestMap(request);
+//        RequestMap requestMap = new RequestMap(request);
         List<Member> memberList = service.getMemberList();
         
         response.setCharacterEncoding("utf-8");
