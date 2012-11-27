@@ -1,6 +1,6 @@
 package jp.caliconography.kms.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-11-27 23:37:26")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-11-28 00:17:34")
 /** */
 public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconography.kms.model.Member> {
 
