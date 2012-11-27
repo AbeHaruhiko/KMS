@@ -19,7 +19,6 @@ public class DownloadCsvController extends Controller {
     @Override
     public Navigation run() throws Exception {
     	
-//        RequestMap requestMap = new RequestMap(request);
         List<Member> memberList = service.getMemberList();
         
         response.setCharacterEncoding("utf-8");
