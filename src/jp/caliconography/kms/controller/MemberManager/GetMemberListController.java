@@ -21,7 +21,6 @@ public class GetMemberListController extends Controller {
 	public Navigation run() throws Exception {
 
 		UserService userService = UserServiceFactory.getUserService();
-		String thisURL = request.getRequestURI();
 		if (request.getUserPrincipal() != null) {
 			// ログインしている場合の処理
 //			requestScope("loginInfo", "<p>You can <a href=\"" + userService.createLogoutURL(thisURL) + "\">sign out</a>.</p>");
