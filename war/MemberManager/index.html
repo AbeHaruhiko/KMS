@@ -9,7 +9,7 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/json2.js"></script>
 <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
-<script src="/js/memebermanage.js"></script>
+<script src="/js/memebermanager.js"></script>
 <script type="text/javascript">
 </script>
 <title>メンバー管理</title>
@@ -56,23 +56,11 @@
 </span>
 <button class="btn" ng-click="download()"><i class="icon-download"></i> CSV Export</button>
 
-<script type="text/javascript">
-$('input[id=fileSelector]').change(function() {
-   $('#filePath').val($(this).val());
-});
-</script>
-
 <div id="alertbox" class="alert alert-{{uploadResult.status | lowercase}} hide" style="margin: 3px 0 3px 0;">
 <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
 <button type="button" class="close">&times;</button>
 {{uploadResult.message}}
 </div>
-<script type="text/javascript">
-$('.alert .close').live('click',function(){
-	  $(this).parent().hide();
-	});
-
-</script>
 
 <p>現在の里乃人口は{{members.length}}人！！</p>
 <table class="table table-striped table-hover">

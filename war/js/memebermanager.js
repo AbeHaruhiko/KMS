@@ -1,3 +1,4 @@
+
 var mainCtrl = function($scope, $http) {
 
   	$scope.updateMemberList = function() {
@@ -101,10 +102,24 @@ var mainCtrl = function($scope, $http) {
     }
 }
 
-//ドキュメント読み込み時にメンバーリストを読み込む
+// DOMの準備完了時
 angular.element(document).ready(function() {
+	//ドキュメント読み込み時にメンバーリストを読み込む
 	var $scope = angular.element('#content').scope();
 	$scope.updateMemberList();
+	
+	// その他イベント追加
+	//ファイル選択時にテキストボックスにパスをコピー
+	$('input[id=fileSelector]').change(function() {
+		   $('#filePath').val($(this).val());
+		});
+
+	// クリックでアラートボックスを非表示にする
+	$('.alert .close').live('click',function(){
+		  $(this).parent().hide();
+		});
+
+
 });
 
 
@@ -121,3 +136,4 @@ angular.module('memberManagerModule', [])
     };
 });
 angular.module('MemberManager', ['memberManagerModule']);
+
