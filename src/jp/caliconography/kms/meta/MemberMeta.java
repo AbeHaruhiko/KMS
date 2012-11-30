@@ -1,8 +1,11 @@
 package jp.caliconography.kms.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-11-28 00:17:34")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-11-30 23:46:19")
 /** */
 public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconography.kms.model.Member> {
+
+    /** */
+    public final org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, java.lang.Boolean> approved = new org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, java.lang.Boolean>(this, "approved", "approved", boolean.class);
 
     /** */
     public final org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member> genzaichi = new org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member>(this, "genzaichi", "genzaichi");
@@ -14,13 +17,13 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
     public final org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member> gplusName = new org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member>(this, "gplusName", "gplusName");
 
     /** */
-    public final org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, java.lang.Boolean> approved = new org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, java.lang.Boolean>(this, "approved", "approved", boolean.class);
-
-    /** */
     public final org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, com.google.appengine.api.datastore.Key> key = new org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, com.google.appengine.api.datastore.Key>(this, "__key__", "key", com.google.appengine.api.datastore.Key.class);
 
     /** */
     public final org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member> kumi = new org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member>(this, "kumi", "kumi");
+
+    /** */
+    public final org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member> mail = new org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member>(this, "mail", "mail");
 
     /** */
     public final org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member> memo = new org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member>(this, "memo", "memo");
@@ -60,12 +63,13 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
     @Override
     public jp.caliconography.kms.model.Member entityToModel(com.google.appengine.api.datastore.Entity entity) {
         jp.caliconography.kms.model.Member model = new jp.caliconography.kms.model.Member();
+        model.setApproved(booleanToPrimitiveBoolean((java.lang.Boolean) entity.getProperty("approved")));
         model.setGenzaichi((java.lang.String) entity.getProperty("genzaichi"));
         model.setGplusId((java.lang.String) entity.getProperty("gplusId"));
         model.setGplusName((java.lang.String) entity.getProperty("gplusName"));
-        model.setApproved(booleanToPrimitiveBoolean((java.lang.Boolean) entity.getProperty("approved")));
         model.setKey(entity.getKey());
         model.setKumi((java.lang.String) entity.getProperty("kumi"));
+        model.setMail((java.lang.String) entity.getProperty("mail"));
         model.setMemo((java.lang.String) entity.getProperty("memo"));
         model.setOshi((java.lang.String) entity.getProperty("oshi"));
         model.setPr((java.lang.String) entity.getProperty("pr"));
@@ -85,11 +89,12 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
         } else {
             entity = new com.google.appengine.api.datastore.Entity(kind);
         }
+        entity.setProperty("approved", m.isApproved());
         entity.setProperty("genzaichi", m.getGenzaichi());
         entity.setProperty("gplusId", m.getGplusId());
         entity.setProperty("gplusName", m.getGplusName());
-        entity.setProperty("approved", m.isApproved());
         entity.setProperty("kumi", m.getKumi());
+        entity.setProperty("mail", m.getMail());
         entity.setProperty("memo", m.getMemo());
         entity.setProperty("oshi", m.getOshi());
         entity.setProperty("pr", m.getPr());
@@ -159,6 +164,8 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
         jp.caliconography.kms.model.Member m = (jp.caliconography.kms.model.Member) model;
         writer.beginObject();
         org.slim3.datastore.json.Default encoder0 = new org.slim3.datastore.json.Default();
+        writer.setNextPropertyName("approved");
+        encoder0.encode(writer, m.isApproved());
         if(m.getGenzaichi() != null){
             writer.setNextPropertyName("genzaichi");
             encoder0.encode(writer, m.getGenzaichi());
@@ -171,11 +178,13 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
             writer.setNextPropertyName("gplusName");
             encoder0.encode(writer, m.getGplusName());
         }
-        writer.setNextPropertyName("approved");
-        encoder0.encode(writer, m.isApproved());
         if(m.getKumi() != null){
             writer.setNextPropertyName("kumi");
             encoder0.encode(writer, m.getKumi());
+        }
+        if(m.getMail() != null){
+            writer.setNextPropertyName("mail");
+            encoder0.encode(writer, m.getMail());
         }
         if(m.getMemo() != null){
             writer.setNextPropertyName("memo");
@@ -209,16 +218,18 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
         jp.caliconography.kms.model.Member m = new jp.caliconography.kms.model.Member();
         org.slim3.datastore.json.JsonReader reader = null;
         org.slim3.datastore.json.Default decoder0 = new org.slim3.datastore.json.Default();
+        reader = rootReader.newObjectReader("approved");
+        m.setApproved(decoder0.decode(reader, m.isApproved()));
         reader = rootReader.newObjectReader("genzaichi");
         m.setGenzaichi(decoder0.decode(reader, m.getGenzaichi()));
         reader = rootReader.newObjectReader("gplusId");
         m.setGplusId(decoder0.decode(reader, m.getGplusId()));
         reader = rootReader.newObjectReader("gplusName");
         m.setGplusName(decoder0.decode(reader, m.getGplusName()));
-        reader = rootReader.newObjectReader("approved");
-        m.setApproved(decoder0.decode(reader, m.isApproved()));
         reader = rootReader.newObjectReader("kumi");
         m.setKumi(decoder0.decode(reader, m.getKumi()));
+        reader = rootReader.newObjectReader("mail");
+        m.setMail(decoder0.decode(reader, m.getMail()));
         reader = rootReader.newObjectReader("memo");
         m.setMemo(decoder0.decode(reader, m.getMemo()));
         reader = rootReader.newObjectReader("oshi");

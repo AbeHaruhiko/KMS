@@ -23,6 +23,8 @@ public class Member implements Serializable {
     @Json(ignore=true)
     private Long version;
 
+    private String mail;
+    
     private String gplusId;
     
     private String gplusName;
@@ -43,9 +45,9 @@ public class Member implements Serializable {
     
     private String memo;
     
-    private boolean isApproved;
-
-    /**
+    private boolean approved;
+    
+	/**
      * Returns the key.
      *
      * @return the key
@@ -253,20 +255,6 @@ public class Member implements Serializable {
         this.oshi = oshi;
     }
 
-    /**
-	 * @return isApproved
-	 */
-	public boolean isApproved() {
-		return isApproved;
-	}
-
-	/**
-	 * @param isApproved セットする isApproved
-	 */
-	public void setApproved(boolean isApproved) {
-		this.isApproved = isApproved;
-	}
-
 	/**
      * @return memo
      */
@@ -280,4 +268,34 @@ public class Member implements Serializable {
     public void setMemo(String memo) {
         this.memo = memo;
     }
+    
+    /**
+	 * @return approved
+	 */
+	public boolean isApproved() {
+		return approved;
+	}
+
+	/**
+	 * @param approved セットする approved
+	 */
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
+	/**
+	 * @return mail
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @param mail セットする mail
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+
 }

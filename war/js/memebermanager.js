@@ -26,9 +26,21 @@ var mainCtrl = function($scope, $http) {
   	    	});
   	}
 
+  	$scope.showComfirm = function(targetMember) {
+  		// 承認対象のG+IDを保管
+  		$scope.targetMember = targetMember;
+  		$scope.approveComfirmMessage = targetMember.approved ?  "の承認を取り消しますか？" : "を承認しますか？";
+  		
+  		// 確認ダイアログ表示
+  		$('#modalDialog').modal('show');
+
+  	}
+  	
   	// 承認リクエスト
-  	$scope.approve = function(gplusId) {
-  	    var uri ='/MemberManager/Approve?gplusId=' + gplusId + '&callback=JSON_CALLBACK';
+  	$scope.approve = function() {
+  		
+  		// 承認処理
+  		var uri ='/MemberManager/Approve?gplusId=' + $scope.targetMember.gplusId + '&approved=' + $scope.targetMember.approved + '&callback=JSON_CALLBACK';
   	    $http.jsonp(uri).
 	    	success(function(data) {
 	      		$scope.uploadResult = data;
@@ -39,6 +51,8 @@ var mainCtrl = function($scope, $http) {
     			$scope.member = data || "error";
 	    		alert("approveのエラー");
   	    	});
+  		$scope.targetMember = null;
+  		$('#modalDialog').modal('hide');
   	}
 /*
   	$scope.upload =function() {
@@ -127,8 +141,8 @@ angular.element(document).ready(function() {
 angular.module('memberManagerModule', []);
 angular.module('memberManagerModule', [])
 .filter('approveStateStringFilter', function () {
-    return function (isApproved) {
-    	if (isApproved) {
+    return function (approved) {
+    	if (approved) {
     		return "済";
     	} else {
     		return "未";

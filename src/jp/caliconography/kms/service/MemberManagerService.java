@@ -49,11 +49,15 @@ public class MemberManagerService {
         Member member = new Member();
         BeanUtil.copy(input, member);
         Member storedMember = Datastore.query(memberMeta).filter(memberMeta.gplusId.equal(member.getGplusId())).asSingle();
-        storedMember.setApproved(true);
+        if (member.isApproved()) {
+            storedMember.setApproved(false);
+        } else {
+            storedMember.setApproved(true);
+        }
         Transaction tx = Datastore.beginTransaction();
         Datastore.put(storedMember);
         tx.commit();
-		return new ProcessResult(ProcessStatus.SUCCESS, "承認しました！", 1);
+		return new ProcessResult(ProcessStatus.SUCCESS, storedMember.isApproved() ? "承認しました！" : "承認を取り消しました！", 1);
     }
 
     public List<Member> getMemberList() {
