@@ -1,6 +1,6 @@
 package jp.caliconography.kms.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-11-30 23:46:19")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-12-01 09:00:47")
 /** */
 public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconography.kms.model.Member> {
 
@@ -32,7 +32,13 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
     public final org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member> oshi = new org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member>(this, "oshi", "oshi");
 
     /** */
+    public final org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, byte[]> passwordHash = new org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, byte[]>(this, "passwordHash", "passwordHash", byte[].class);
+
+    /** */
     public final org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member> pr = new org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member>(this, "pr", "pr");
+
+    /** */
+    public final org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, byte[]> salt = new org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, byte[]>(this, "salt", "salt", byte[].class);
 
     /** */
     public final org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member> shussekiBango = new org.slim3.datastore.StringAttributeMeta<jp.caliconography.kms.model.Member>(this, "shussekiBango", "shussekiBango");
@@ -72,7 +78,9 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
         model.setMail((java.lang.String) entity.getProperty("mail"));
         model.setMemo((java.lang.String) entity.getProperty("memo"));
         model.setOshi((java.lang.String) entity.getProperty("oshi"));
+        model.setPasswordHash(shortBlobToBytes((com.google.appengine.api.datastore.ShortBlob) entity.getProperty("passwordHash")));
         model.setPr((java.lang.String) entity.getProperty("pr"));
+        model.setSalt(shortBlobToBytes((com.google.appengine.api.datastore.ShortBlob) entity.getProperty("salt")));
         model.setShussekiBango((java.lang.String) entity.getProperty("shussekiBango"));
         model.setShusshinchi((java.lang.String) entity.getProperty("shusshinchi"));
         model.setTwitterId((java.lang.String) entity.getProperty("twitterId"));
@@ -97,7 +105,9 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
         entity.setProperty("mail", m.getMail());
         entity.setProperty("memo", m.getMemo());
         entity.setProperty("oshi", m.getOshi());
+        entity.setProperty("passwordHash", bytesToShortBlob(m.getPasswordHash()));
         entity.setProperty("pr", m.getPr());
+        entity.setProperty("salt", bytesToShortBlob(m.getSalt()));
         entity.setProperty("shussekiBango", m.getShussekiBango());
         entity.setProperty("shusshinchi", m.getShusshinchi());
         entity.setProperty("twitterId", m.getTwitterId());

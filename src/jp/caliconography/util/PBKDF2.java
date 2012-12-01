@@ -27,14 +27,14 @@ public class PBKDF2 {
     }
 
     // ランダムなsaltを生成
-    static byte[] createSalt() throws NoSuchAlgorithmException {
+    public static byte[] createSalt() throws NoSuchAlgorithmException {
         SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[32];
         random.nextBytes(salt);
         return salt;
     }
 
-    static byte[] pbkdf2(char[] password, byte[] salt) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public static byte[] pbkdf2(char[] password, byte[] salt) throws InvalidKeySpecException, NoSuchAlgorithmException {
         // Oracle JDKに含まれる PBKDF2 の唯一の実装
         SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         // 繰り返し回数：10000回、結果の長さ：256bit

@@ -1,8 +1,12 @@
 package jp.caliconography.kms.model;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.caliconography.util.PBKDF2;
 
 import org.slim3.datastore.Attribute;
 import org.slim3.datastore.Model;
@@ -25,6 +29,18 @@ public class Member implements Serializable {
 
     private String mail;
     
+    // パスワードは永続化しない。ハッシュ化して永続化。
+    @Json(ignore=true)
+    @Attribute(persistent = false)
+    private String password;
+    
+    @Json(ignore=true)
+    private byte[] passwordHash;
+    
+    // パスワード永続化時に使用するsalt
+    @Json(ignore=true)
+    private byte[] salt;
+    	
     private String gplusId;
     
     private String gplusName;
@@ -295,6 +311,40 @@ public class Member implements Serializable {
 	 */
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	/**
+	 * @return password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password セットする password
+	 */
+	public void setPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		this.password = password;
+		
+		// パスワードが渡ってきたらハッシュ化する。
+        byte[] salt = PBKDF2.createSalt();
+		setPasswordHash(PBKDF2.pbkdf2(password.toCharArray(), salt));
+	}
+
+	public byte[] getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(byte[] passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
 	}
 
 
