@@ -1,8 +1,11 @@
 package jp.caliconography.kms.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-12-01 09:00:47")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2012-12-03 23:54:08")
 /** */
 public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconography.kms.model.Member> {
+
+    /** */
+    public final org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, java.lang.Boolean> admin = new org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, java.lang.Boolean>(this, "admin", "admin", boolean.class);
 
     /** */
     public final org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, java.lang.Boolean> approved = new org.slim3.datastore.CoreAttributeMeta<jp.caliconography.kms.model.Member, java.lang.Boolean>(this, "approved", "approved", boolean.class);
@@ -69,6 +72,7 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
     @Override
     public jp.caliconography.kms.model.Member entityToModel(com.google.appengine.api.datastore.Entity entity) {
         jp.caliconography.kms.model.Member model = new jp.caliconography.kms.model.Member();
+        model.setAdmin(booleanToPrimitiveBoolean((java.lang.Boolean) entity.getProperty("admin")));
         model.setApproved(booleanToPrimitiveBoolean((java.lang.Boolean) entity.getProperty("approved")));
         model.setGenzaichi((java.lang.String) entity.getProperty("genzaichi"));
         model.setGplusId((java.lang.String) entity.getProperty("gplusId"));
@@ -97,6 +101,7 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
         } else {
             entity = new com.google.appengine.api.datastore.Entity(kind);
         }
+        entity.setProperty("admin", m.isAdmin());
         entity.setProperty("approved", m.isApproved());
         entity.setProperty("genzaichi", m.getGenzaichi());
         entity.setProperty("gplusId", m.getGplusId());
@@ -174,6 +179,8 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
         jp.caliconography.kms.model.Member m = (jp.caliconography.kms.model.Member) model;
         writer.beginObject();
         org.slim3.datastore.json.Default encoder0 = new org.slim3.datastore.json.Default();
+        writer.setNextPropertyName("admin");
+        encoder0.encode(writer, m.isAdmin());
         writer.setNextPropertyName("approved");
         encoder0.encode(writer, m.isApproved());
         if(m.getGenzaichi() != null){
@@ -228,6 +235,8 @@ public final class MemberMeta extends org.slim3.datastore.ModelMeta<jp.caliconog
         jp.caliconography.kms.model.Member m = new jp.caliconography.kms.model.Member();
         org.slim3.datastore.json.JsonReader reader = null;
         org.slim3.datastore.json.Default decoder0 = new org.slim3.datastore.json.Default();
+        reader = rootReader.newObjectReader("admin");
+        m.setAdmin(decoder0.decode(reader, m.isAdmin()));
         reader = rootReader.newObjectReader("approved");
         m.setApproved(decoder0.decode(reader, m.isApproved()));
         reader = rootReader.newObjectReader("genzaichi");

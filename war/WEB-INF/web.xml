@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+<?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
 	<context-param>
         <param-name>slim3.rootPackage</param-name>
         <param-value>jp.caliconography.kms</param-value>
@@ -38,7 +36,7 @@
 		<filter-class>jp.caliconography.kms.filter.AuthFilter</filter-class>
 		<init-param>
 			<param-name>exclude</param-name>
-			<param-value>/index.jsp,/css*,/_ah/login*</param-value>
+			<param-value/>
 		</init-param>
 	</filter>
     <!-- 認証フィルタ -->
@@ -160,4 +158,16 @@
 		</auth-constraint>
 	</security-constraint>
 	<!-- 3. security added for CNMV. end -->
+ <servlet>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+  <init-param>
+   <param-name>services</param-name>
+   <param-value/>
+  </init-param>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>SystemServiceServlet</servlet-name>
+  <url-pattern>/_ah/spi/*</url-pattern>
+ </servlet-mapping>
 </web-app>

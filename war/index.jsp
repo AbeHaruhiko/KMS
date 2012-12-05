@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ include file="/common/noCache.jsp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ja" ng-app>
 <head>
@@ -9,7 +13,6 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/json2.js"></script>
 <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
-<script src="js/script.js"></script>
 <script type="text/javascript">
 </script>
 <title>メンバー管理</title>
@@ -29,18 +32,20 @@
         <form class="navbar-search pull-left">
             <input type="text" class="search-query" placeholder="検索">
         </form>
+        <c:if test="${loginUserInfo != null}">
         <ul class="nav pull-right">
             <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                安部晴彦
+                ${loginUserInfo.nickname}
                 <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="">Settings</a></li>
-                    <li><a href="">Logout</a></li>
+                    <li><a href="${logoutUrlPath}">Logout</a></li>
                 </ul>
             </li>
         </ul>
+        </c:if>
     </div>
     </div>
 </div>

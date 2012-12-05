@@ -63,6 +63,8 @@ public class Member implements Serializable {
     
     private boolean approved;
     
+    private boolean admin;
+    
 	/**
      * Returns the key.
      *
@@ -347,5 +349,11 @@ public class Member implements Serializable {
 		this.salt = salt;
 	}
 
+	public boolean isAdmin() {
+		return admin;
+	}
 
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 }

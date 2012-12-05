@@ -2,6 +2,7 @@ package jp.caliconography.kms.filter;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,6 +13,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import jp.caliconography.kms.model.Member;
+import jp.caliconography.kms.service.MemberManagerService;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -30,27 +34,31 @@ public class AuthFilter implements Filter {
 		String thisURL = ((HttpServletRequest) request).getRequestURI();
 		Principal principal = ((HttpServletRequest) request).getUserPrincipal();
 		HttpSession session = ((HttpServletRequest) request).getSession();
-		
+
 		if (principal == null) {
 			if (!isExcludePath(thisURL)) {
-				
-				// ユーザ未認証
-//	            session.setAttribute("isLogin", "LOGOUT");
-//	            // ログイン用のGoogle AccountsのURLを取得します
-//	            session.setAttribute("urlpath", userService.createLoginURL(thisURL));
-				// ○ 除外したURL以外へのアクセスの場合、ログイン画面にリダイレクトする
-				((HttpServletResponse) response).sendRedirect(userService.createLoginURL(thisURL));
-				return;
+
+				 // ログイン用のGoogle AccountsのURLを取得します
+				 session.removeAttribute("logoutUrlPath");
+				// ユーザアカウント関連情報
+				session.removeAttribute("loginUserInfo");
 			}
 		} else {
-            // ユーザ認証済
-            session.setAttribute("isLogin", "LOGIN");
-            // ログアウト用のGoogle AccountsのURLを取得します
-            session.setAttribute("urlpath", userService.createLogoutURL(thisURL));
-            // ユーザアカウント関連情報
-            session.setAttribute("userInfo", userService.getCurrentUser());
-            return;
-        }
+			MemberManagerService service = new MemberManagerService();
+			Member memberInfo = service.getMember(userService.getCurrentUser().getEmail());
+//			if (!userService.isUserAdmin() && memberInfo == null) {
+			if (memberInfo == null && !Arrays.asList("/", "/index.jsp").contains(((HttpServletRequest) request).getRequestURI())) {
+				((HttpServletResponse) response).sendRedirect(userService.createLogoutURL("/"));
+				return;
+			}
+
+			// ログアウト用のGoogle AccountsのURLを取得します
+			session.setAttribute("logoutUrlPath", userService.createLogoutURL("/"));
+			// ユーザアカウント関連情報
+			session.setAttribute("loginUserInfo", userService.getCurrentUser());
+			// 里メンバー情報
+			session.setAttribute("loginMemberInfo", memberInfo);
+		}
 		chain.doFilter(request, response);
 	}
 
@@ -61,6 +69,8 @@ public class AuthFilter implements Filter {
 	 * @return
 	 */
 	private boolean isExcludePath(String thisURL) {
+		if (this.excludes == null)
+			return false;
 		String[] excludes = this.excludes;
 		for (String path : excludes) {
 			// 除外対象パスの最後が「*」の場合、indexOfで含まれるか確認
@@ -81,7 +91,7 @@ public class AuthFilter implements Filter {
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		String exclude = config.getInitParameter("exclude");
-		if (exclude == null)
+		if (exclude == null || "".equals(exclude))
 			return;
 		this.excludes = exclude.split(",");
 	}

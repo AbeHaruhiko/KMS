@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ include file="/common/noCache.jsp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ja" ng-app>
 <head>
@@ -29,18 +33,20 @@
         <form class="navbar-search pull-left">
             <input type="text" class="search-query" placeholder="検索">
         </form>
+        <c:if test="${loginUserInfo != null}">
         <ul class="nav pull-right">
             <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                安部晴彦
+                ${loginUserInfo.nickname}
                 <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="">Settings</a></li>
-                    <li><a href="">Logout</a></li>
+                    <li><a href="${logoutUrlPath}">Logout</a></li>
                 </ul>
             </li>
         </ul>
+        </c:if>
     </div>
     </div>
 </div>
@@ -72,6 +78,15 @@ $('.alert .close').live('click',function(){
 </div>
 
 <div class="control-group">
+<label class="control-label">メールアドレス</label>
+<div class="controls">
+<input type="email" name="mail" class="input4apply span3" placeholder="Enter your e-mail address" ng-model="input.mail" required/>
+<span class="error" ng-show="applyForm.mail.$error.required">必須</span>
+<span class="error" ng-show="applyForm.mail.$error.email">正しいメールアドレスを入力してください。</span><br />
+</div>
+</div>
+
+<div class="control-group">
 <label class="control-label">Twitter</label>
 <div class="controls">
 <input type="text" name="twitterId" class="input4apply span3" placeholder="Enter your Twitter ID" ng-model="input.twitterId" required ng-pattern="/(@[A-Za-z0-9_]{1,15})/" />
@@ -92,6 +107,7 @@ $('.alert .close').live('click',function(){
 
 </div>
 <pre>{{input|json}}</pre>
+<pre>{{gplusInfo|json}}</pre>
 <pre>{{applyResult|json}}</pre>
 </body>
 </html>

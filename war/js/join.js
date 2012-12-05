@@ -37,4 +37,16 @@ var mainCtrl = function($scope, $http) {
 //	    		alert("updateMemberListのエラー");
 //  	    	});
   	}
+  	
+  	$scope.getGplusInfo = function(gplusId) {
+		var gplusUrl = "https://www.googleapis.com/plus/v1/people/" + $scope.input.gplusId + "?key=AIzaSyA7fDXepKFrWrp-AGHgi2yWVYQL6VGEjbc&callback=JSON_CALLBACK"
+		$http.jsonp(gplusUrl).
+			success(function(data) {
+				$scope.gplusInfo = data;
+			}).
+			error(function(data) {
+				console.log("G+アクセスエラー");
+			});
+
+  	}
 }
