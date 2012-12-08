@@ -30,8 +30,8 @@
             <li class="active"><a href="">里乃民一覧</a></li>
             <li><a href="/Join/">里加入</a></li>
         </ul>
-        <form class="navbar-search pull-left">
-            <input type="text" class="search-query" placeholder="検索">
+        <form class="navbar-search pull-left"  ng-submit="search()" name="searchForm">
+            <input type="text" class="search-query" placeholder="検索" ng-model="searchQuery">
         </form>
         <c:if test="${loginUserInfo != null}">
         <ul class="nav pull-right">
@@ -41,8 +41,8 @@
                 <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="">Settings</a></li>
-                    <li><a href="${logoutUrlPath}">Logout</a></li>
+                    <li><a href=""><i class="icon-cog"></i> Settings</a></li>
+                    <li><a href="${logoutUrlPath}"><i class="icon-off"></i> Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -71,11 +71,24 @@
 <p>現在の里の人口は{{members.length}}人！！</p>
 <table class="table table-striped table-hover">
 <thead>
-<tr><c:if test="${loginMemberInfo.admin}"><th>承認</th></c:if><th>出席番号</th><th>G+</th><th>Twitter</th><th>組</th><th>推し</th><th>PR</th><th>その他</th></tr>
+<tr><c:if test="${loginMemberInfo.admin}"><th>承認</th></c:if><th>出席番号</th><th>G+</th><th>Twitter</th><th>組</th><th>推し</th><th>PR</th><th>その他</th><th></th></tr>
 </thead>
 <tbody>
 <tr ng-repeat="member in members" >
-<c:if test="${loginMemberInfo.admin}"><td><a href="" ng-click="showComfirm(member)">{{member.approved | approveStateStringFilter}}</a></td></c:if><td>{{member.shussekiBango}}</td><td><a href="{{member.gplusInfo.url}}" target="_blank"><img src="{{member.gplusInfo.image.url}}"/> {{member.gplusInfo.displayName}}</a></td><td>{{member.twitterId}}</td><td>{{member.kumi}}</td><td>{{member.oshi}}</td><td>{{member.pr}}</td><td>{{member.memo}}</td>
+<c:if test="${loginMemberInfo.admin}">
+	<td><a href="" ng-click="showComfirm(member, 'changeApproveState')">{{member.approved | approveStateStringFilter}}</a></td>
+</c:if>
+	<td>{{member.shussekiBango}}</td>
+	<td><a href="{{member.gplusInfo.url}}" target="_blank"><img src="{{member.gplusInfo.image.url}}"/> {{member.gplusInfo.displayName}}</a></td>
+	<td>{{member.twitterId}}</td>
+	<td>{{member.kumi}}</td>
+	<td>{{member.oshi}}</td>
+	<td>{{member.pr}}</td>
+	<td>{{member.memo}}</td>
+	<td>
+		<a href="user.html"><i class="icon-pencil"></i></a>
+		<a href="#myModal" ng-click="showComfirm(member, 'delete')"><i class="icon-remove"></i></a>
+	</td>
 </tr>
 </tbody>
 </table>

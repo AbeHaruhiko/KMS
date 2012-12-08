@@ -40,8 +40,8 @@
                 <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="">Settings</a></li>
-                    <li><a href="${logoutUrlPath}">Logout</a></li>
+                    <li><a href=""><i class="icon-cog"></i> Settings</a></li>
+                    <li><a href="${logoutUrlPath}"><i class="icon-off"></i> Logout</a></li>
                 </ul>
             </li>
         </ul>

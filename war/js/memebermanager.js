@@ -8,12 +8,18 @@ var mainCtrl = function($scope, $http) {
     			$scope.members = data;
 
     			// G+APIから情報取得
-    			for (var i in $scope.members) {
-
+    			for (var i = 0; i < $scope.members.length; i++) {
+    				console.log(i);
     				var gplusUrl = "https://www.googleapis.com/plus/v1/people/" + $scope.members[i].gplusId + "?key=AIzaSyA7fDXepKFrWrp-AGHgi2yWVYQL6VGEjbc&callback=JSON_CALLBACK"
     				$http.jsonp(gplusUrl).
     					success(function(data) {
-    						$scope.members[i].gplusInfo = data;
+    						// 非同期なのでiは使えない。
+    						// 最初に取得したmembersのG+IDとG+APIから返ってきたデータのG+IDを比較してセットする。
+    						for(var j = 0; j < $scope.members.length; j++) {
+    							if(data.id == $scope.members[j].gplusId) {
+    	     						$scope.members[j].gplusInfo = data;
+    							}
+    						}
     					}).
     					error(function(data) {
     						console.log("G+アクセスエラー");
@@ -26,10 +32,10 @@ var mainCtrl = function($scope, $http) {
   	    	});
   	}
 
-  	$scope.showComfirm = function(targetMember) {
+  	$scope.showComfirm = function(targetMember, mode) {
   		// 承認対象のG+IDを保管
   		$scope.targetMember = targetMember;
-  		$scope.approveComfirmMessage = targetMember.approved ?  "の承認を取り消しますか？" : "を承認しますか？";
+  		$scope.approveComfirmMessage = mode == "changeApproveState"? (targetMember.approved ?  "の承認を取り消しますか？" : "を承認しますか？") : "を削除しますか？";
   		
   		// 確認ダイアログ表示
   		$('#modalDialog').modal('show');
@@ -80,7 +86,7 @@ var mainCtrl = function($scope, $http) {
   	    };
   	$scope.upload = function() {
         var fd = new FormData()
-        for (var i in $scope.files) {
+        for (var i = 0; i < $scope.files.length; i++) {
             fd.append("uploadedFile", $scope.files[i])
         }
         var xhr = new XMLHttpRequest()
@@ -113,6 +119,38 @@ var mainCtrl = function($scope, $http) {
 
     $scope.download = function() {
     	location.href = "/MemberManager/DownloadCsv";
+    }
+    
+    $scope.search = function() {
+  	    var uri ='/MemberManager/SearchMember?query=' + $scope.searchQuery + '&callback=JSON_CALLBACK';
+  	    $http.jsonp(uri).
+	    	success(function(data) {
+    			$scope.members = data;
+
+    			// G+APIから情報取得
+    			for (var i = 0; i < $scope.members.length; i++) {
+
+    				var gplusUrl = "https://www.googleapis.com/plus/v1/people/" + $scope.members[i].gplusId + "?key=AIzaSyA7fDXepKFrWrp-AGHgi2yWVYQL6VGEjbc&callback=JSON_CALLBACK"
+    				$http.jsonp(gplusUrl).
+    					success(function(data) {
+    						// 非同期なのでiは使えない。
+    						// 最初に取得したmembersのG+IDとG+APIから返ってきたデータのG+IDを比較してセットする。
+    						for(var j = 0; j < $scope.members.length; j++) {
+    							if(data.id == $scope.members[j].gplusId) {
+    	     						$scope.members[j].gplusInfo = data;
+    							}
+    						}
+    					}).
+    					error(function(data) {
+    						console.log("G+アクセスエラー");
+    					});
+    			}
+  	    	}).
+  	    	error(function(data) {
+    			$scope.member = data || "error";
+	    		alert("searchのエラー");
+  	    	});
+
     }
 }
 

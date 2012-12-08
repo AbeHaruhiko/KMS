@@ -41,8 +41,8 @@
                 <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="">Settings</a></li>
-                    <li><a href="${logoutUrlPath}">Logout</a></li>
+                    <li><a href=""><i class="icon-cog"></i> Settings</a></li>
+                    <li><a href="${logoutUrlPath}"><i class="icon-off"></i> Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -91,6 +91,17 @@ $('.alert .close').live('click',function(){
 <div class="controls">
 <input type="text" name="twitterId" class="input4apply span3" placeholder="Enter your Twitter ID" ng-model="input.twitterId" required ng-pattern="/(@[A-Za-z0-9_]{1,15})/" />
 <span class="error" ng-show="applyForm.twitterId.$error.pattern">@英数字を入力してください。（15文字以内）</span><br />
+</div>
+</div>
+
+<div class="control-group">
+<label class="control-label">管理者</label>
+<div class="controls">
+<label class="radio">
+  <input type="radio" name="isAdmin" id="isAdmin" value="true" required>  管理者</label>
+<label class="radio">
+  <input type="radio" name="isAdmin" id="isAdminFalse" value="false" required>  民</label>
+<!-- <span class="error" ng-show="applyForm.isAdmin.$error.required">必須</span><br /> -->
 </div>
 </div>
 
