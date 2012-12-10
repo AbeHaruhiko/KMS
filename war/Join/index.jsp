@@ -95,13 +95,12 @@ $('.alert .close').live('click',function(){
 </div>
 
 <div class="control-group">
-<label class="control-label">管理者</label>
+<label class="control-label">民管理権限</label>
 <div class="controls">
-<label class="radio">
-  <input type="radio" name="isAdmin" id="isAdmin" value="true" required>  管理者</label>
-<label class="radio">
-  <input type="radio" name="isAdmin" id="isAdminFalse" value="false" required>  民</label>
-<!-- <span class="error" ng-show="applyForm.isAdmin.$error.required">必須</span><br /> -->
+<label class="radio inline">
+  <input type="radio" name="admin" class="input4apply" value="true" ng-model="input.admin" required>  管理者</label>
+<label class="radio inline">
+  <input type="radio" name="admin" class="input4apply" value="false" ng-model="input.admin" required>  民</label>
 </div>
 </div>
 

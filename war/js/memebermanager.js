@@ -32,14 +32,40 @@ var mainCtrl = function($scope, $http) {
   	    	});
   	}
 
-  	$scope.showComfirm = function(targetMember, mode) {
+  	$scope.getLoginMember = function() {
+  	    var uri ='/MemberManager/GetLoginMember?callback=JSON_CALLBACK';
+  	    $http.jsonp(uri).
+	    	success(function(data) {
+    			$scope.loginMember = data;
+  	    	}).
+  	    	error(function(data) {
+    			$scope.loginMember = data || "error";
+	    		alert("getLoginMemberのエラー");
+  	    	});
+  	}
+
+  	$scope.showConfirm = function(targetMember, mode) {
   		// 承認対象のG+IDを保管
   		$scope.targetMember = targetMember;
-  		$scope.approveComfirmMessage = mode == "changeApproveState"? (targetMember.approved ?  "の承認を取り消しますか？" : "を承認しますか？") : "を削除しますか？";
+  		$scope.approveConfirmMessage = mode == "changeApproveState"? (targetMember.approved ?  "の承認を取り消しますか？" : "を承認しますか？") : "を削除しますか？";
   		
   		// 確認ダイアログ表示
-  		$('#modalDialog').modal('show');
+  		$('#confirmDialog').modal('show');
 
+  	}
+  	
+  	$scope.showEditForm = function(targetMember) {
+  		// 承認対象のG+IDを保管
+  		$scope.input = jQuery.extend(true, {}, targetMember);
+  		// true, falseを文字列の"true", "false"に変換する。ラジオボタンのvalueは文字列なので、booleanをセットしてもチェックが入らないため。
+  		for(var i in $scope.input) {
+  			if($scope.input[i] === true || $scope.input[i] === false) {
+  				$scope.input[i] = "" + $scope.input[i];//"true";
+  			}
+  		}
+  		
+  		// 確認ダイアログ表示
+  		$('#editFormDialog').modal('show');
   	}
   	
   	// 承認リクエスト
@@ -58,7 +84,7 @@ var mainCtrl = function($scope, $http) {
 	    		alert("approveのエラー");
   	    	});
   		$scope.targetMember = null;
-  		$('#modalDialog').modal('hide');
+  		$('#confirmDialog').modal('hide');
   	}
 /*
   	$scope.upload =function() {
@@ -160,6 +186,9 @@ angular.element(document).ready(function() {
 	var $scope = angular.element('#content').scope();
 	$scope.updateMemberList();
 	
+	// ログインユーザのメンバー情報を取得
+	$scope.getLoginMember();
+	
 	// その他イベント追加
 	//ファイル選択時にテキストボックスにパスをコピー
 	$('input[id=fileSelector]').change(function() {
@@ -171,7 +200,8 @@ angular.element(document).ready(function() {
 		  $(this).parent().hide();
 		});
 
-
+	// テーブルのソートの準備
+	new Tablesort(document.getElementById('memberListTable'));
 });
 
 
@@ -181,9 +211,11 @@ angular.module('memberManagerModule', [])
 .filter('approveStateStringFilter', function () {
     return function (approved) {
     	if (approved) {
-    		return "済";
+//    		return "済";
+    		return '<i class="icon-ok"></i> 済';
     	} else {
-    		return "未";
+//    		return "未";
+    		return '<i class="icon-ban-circle"></i> 未';
     	}
     };
 });
