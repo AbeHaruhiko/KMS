@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -137,8 +138,21 @@ public class MemberManagerService {
 		return new ProcessResult(ProcessStatus.SUCCESS, storedMember.isApproved() ? "承認しました！" : "承認を取り消しました！", 1);
 	}
 
+	public ProcessResult delete(Map<String, Object> input) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+		Member member = new Member();
+		BeanUtil.copy(input, member);
+		Member storedMember = Datastore.query(memberMeta).filter(memberMeta.gplusId.equal(member.getGplusId())).asSingle();
+
+		storedMember.setDeletedDate(new Date());
+		Transaction tx = Datastore.beginTransaction();
+		Datastore.put(storedMember);
+		tx.commit();
+
+		return new ProcessResult(ProcessStatus.SUCCESS, "削除しました！", 1);
+	}
+
 	public List<Member> getMemberList() {
-		return Datastore.query(memberMeta).sort(memberMeta.gplusId.asc).asList();
+		return Datastore.query(memberMeta).filter(memberMeta.deletedDate.equal(null)).sort(memberMeta.gplusId.asc).asList();
 	}
 
 	public Member getMember(String mail) {

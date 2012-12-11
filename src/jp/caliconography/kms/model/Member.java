@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jp.caliconography.util.PBKDF2;
@@ -64,6 +65,8 @@ public class Member implements Serializable {
     private boolean approved;
     
     private boolean admin;
+    
+    private Date deletedDate;
     
 	/**
      * Returns the key.
@@ -355,5 +358,13 @@ public class Member implements Serializable {
 
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
+	}
+
+	public Date getDeletedDate() {
+		return deletedDate;
+	}
+
+	public void setDeletedDate(Date deletedDate) {
+		this.deletedDate = deletedDate;
 	}
 }

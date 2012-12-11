@@ -87,7 +87,7 @@
 </thead>
 <tbody>
 <tr ng-repeat="member in members" >
-	<td ng-show="loginMember.admin"><a href="" ng-click="showConfirm(member, 'changeApproveState')" ng-bind-html-unsafe="member.approved | approveStateStringFilter"></a></td>
+	<td ng-show="loginMember.admin"><a href="" ng-click="showConfirm(member, 'approve')" ng-bind-html-unsafe="member.approved | approveStateStringFilter"></a></td>
 	<td>{{member.shussekiBango}}</td>
 	<td><a href="{{member.gplusInfo.url}}" target="_blank"><img src="{{member.gplusInfo.image.url}}"/> {{member.gplusInfo.displayName}}</a></td>
 	<td>{{member.twitterId}}</td>
@@ -126,18 +126,20 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">キャンセル</button>
-    <button class="btn btn-primary" ng-click="approve()">実行！</button>
+    <button class="btn btn-primary" ng-click="doApproveOrDelete($scope.modeApproveOrDelete)">実行！</button>
   </div>
 </div>
+<!-- Modal -->
 
-<div id="editFormDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalFormLabel" aria-hidden="true">
-<form ng-submit="updateMember()" name="editForm">
+<!-- Modal -->
+<div id="editFormDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modalFormLabel" aria-hidden="true" style="width:700px;margin: -300px 0 0 -350px;">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3 id="modalDialogLabel">民情報編集</h3>
   </div>
   <div class="modal-body">
 		
+	<form ng-submit="updateMember()" name="editForm" id="editForm">
 		<div class="control-group">
 		<label class="control-label">G+</label>
 		<div class="controls">
@@ -176,14 +178,15 @@
 		
 		<span ng-show="editForm.$invalid" class="comment">未入力の項目や正しく入力できていない項目があります。</span>
 		<span ng-show="editForm.$valid" class="comment">入力チェックOK!</span>
+	</form>
 		
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">キャンセル</button>
-	<input id="updatebtn" name="updatebtn" class="btn btn-primary" type="submit" value="更新！" ng-disabled="editForm.$invalid"/>
+	<input id="updatebtn" name="updatebtn" class="btn btn-primary" type="submit" value="更新！" ng-disabled="editForm.$invalid" form="editForm"/>
   </div>
-</form>
 </div>
+<!-- Modal -->
 
 </div>
 <pre>{{input|json}}</pre>

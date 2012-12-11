@@ -49,6 +49,7 @@ var mainCtrl = function($scope, $http) {
   		$scope.targetMember = targetMember;
   		$scope.approveConfirmMessage = mode == "changeApproveState"? (targetMember.approved ?  "の承認を取り消しますか？" : "を承認しますか？") : "を削除しますか？";
   		
+  		$scope.modeApproveOrDelete = mode;
   		// 確認ダイアログ表示
   		$('#confirmDialog').modal('show');
 
@@ -177,6 +178,36 @@ var mainCtrl = function($scope, $http) {
 	    		alert("searchのエラー");
   	    	});
 
+    }
+    
+    $scope.doApproveOrDelete = function(mode) {
+    	if (mode == 'approve') {
+    		$scope.approve();
+    	} else if (mode == 'delete') {
+    		$scope.deleteMember();
+    	}
+    }
+    
+    $scope.deleteMember = function() {
+  		// 承認処理
+  		var uri ='/MemberManager/DeleteMember?gplusId=' + $scope.targetMember.gplusId + '&callback=JSON_CALLBACK';
+  	    $http.jsonp(uri).
+	    	success(function(data) {
+	      		$scope.uploadResult = data;
+	    		$('#alertbox').show();
+	      		$scope.updateMemberList();
+  	    	}).
+  	    	error(function(data) {
+    			$scope.member = data || "error";
+	    		alert("approveのエラー");
+  	    	});
+  		$scope.targetMember = null;
+  		$('#confirmDialog').modal('hide');
+
+    }
+    
+    $scope.updateMember = function() {
+    	alert("");
     }
 }
 

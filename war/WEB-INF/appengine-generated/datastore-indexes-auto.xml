@@ -1,4 +1,11 @@
-<!-- Indices written at Sun, 9 Dec 2012 15:58:45 JST -->
+<!-- Indices written at Wed, 12 Dec 2012 00:07:47 JST -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Member" ancestor="false" source="auto">
+        <property name="deletedDate" direction="asc"/>
+        <property name="gplusId" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>
