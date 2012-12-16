@@ -16,7 +16,7 @@ public class DeleteMemberController extends Controller {
     public Navigation run() throws Exception {
 		RequestMap requestMap = new RequestMap(request);
 
-		ProcessResult result = service.approve(requestMap);
+		ProcessResult result = service.setDeletedDate(requestMap);
 
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().println(requestMap.get("callback") + "(" + ProcessResultMeta.get().modelToJson(result) + ");");

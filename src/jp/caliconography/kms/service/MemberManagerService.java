@@ -138,7 +138,7 @@ public class MemberManagerService {
 		return new ProcessResult(ProcessStatus.SUCCESS, storedMember.isApproved() ? "承認しました！" : "承認を取り消しました！", 1);
 	}
 
-	public ProcessResult delete(Map<String, Object> input) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+	public ProcessResult setDeletedDate(Map<String, Object> input) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 		Member member = new Member();
 		BeanUtil.copy(input, member);
 		Member storedMember = Datastore.query(memberMeta).filter(memberMeta.gplusId.equal(member.getGplusId())).asSingle();
@@ -153,6 +153,7 @@ public class MemberManagerService {
 
 	public List<Member> getMemberList() {
 		return Datastore.query(memberMeta).filter(memberMeta.deletedDate.equal(null)).sort(memberMeta.gplusId.asc).asList();
+//		return Datastore.query(memberMeta).sort(memberMeta.gplusId.asc).asList();
 	}
 
 	public Member getMember(String mail) {

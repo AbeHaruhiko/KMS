@@ -3,7 +3,8 @@ var mainCtrl = function($scope, $http) {
   	$scope.apply = function() {
   		// 申請項目を無効化
   		$('#applybtn').attr('disabled', true);
-  		$('.input4apply').attr('readonly', true);
+//  		$('.input4apply').attr('readonly', true);
+  		$('.input4apply').addClass('uneditable-input');
 
 //		var post_data = $.param(angular.toJson($scope.input));
 		var post_data = $.param($scope.input);

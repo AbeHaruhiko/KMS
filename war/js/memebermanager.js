@@ -181,15 +181,15 @@ var mainCtrl = function($scope, $http) {
     }
     
     $scope.doApproveOrDelete = function(mode) {
-    	if (mode == 'approve') {
+    	if ($scope.modeApproveOrDelete == 'approve') {
     		$scope.approve();
-    	} else if (mode == 'delete') {
+    	} else if ($scope.modeApproveOrDelete == 'delete') {
     		$scope.deleteMember();
     	}
     }
     
     $scope.deleteMember = function() {
-  		// 承認処理
+  		// 削除処理
   		var uri ='/MemberManager/DeleteMember?gplusId=' + $scope.targetMember.gplusId + '&callback=JSON_CALLBACK';
   	    $http.jsonp(uri).
 	    	success(function(data) {
@@ -199,7 +199,7 @@ var mainCtrl = function($scope, $http) {
   	    	}).
   	    	error(function(data) {
     			$scope.member = data || "error";
-	    		alert("approveのエラー");
+	    		alert("deleteMemberのエラー");
   	    	});
   		$scope.targetMember = null;
   		$('#confirmDialog').modal('hide');

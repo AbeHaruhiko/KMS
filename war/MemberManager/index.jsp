@@ -126,7 +126,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">キャンセル</button>
-    <button class="btn btn-primary" ng-click="doApproveOrDelete($scope.modeApproveOrDelete)">実行！</button>
+    <button class="btn btn-primary" ng-click="doApproveOrDelete()">実行！</button>
   </div>
 </div>
 <!-- Modal -->
@@ -143,7 +143,7 @@
 		<div class="control-group">
 		<label class="control-label">G+</label>
 		<div class="controls">
-		<input type="text" name="gplusId" class="input4edit span3" placeholder="Enter your G+ ID" ng-model="input.gplusId" required ng-pattern="/^\d{21}$/"/>
+		<input type="text" name="gplusId" class="input4edit span3" placeholder="Enter G+ ID" ng-model="input.gplusId" required ng-pattern="/^\d{21}$/"/>
 		<span class="error" ng-show="editForm.gplusId.$error.required">必須</span>
 		<span class="error" ng-show="editForm.gplusId.$error.pattern">21文字の数字を入力してください!（<a href="https://plus.google.com/me" target="blank">https://plus.google.com/meにアクセスしてURLの数字の部分をコピペ！）</a></span><br />
 		</div>
@@ -152,7 +152,7 @@
 		<div class="control-group">
 		<label class="control-label">メールアドレス</label>
 		<div class="controls">
-		<input type="email" name="mail" class="input4edit span3" placeholder="Enter your e-mail address" ng-model="input.mail" required/>
+		<input type="email" name="mail" class="input4edit span3" placeholder="Enter e-mail address" ng-model="input.mail" required/>
 		<span class="error" ng-show="editForm.mail.$error.required">必須</span>
 		<span class="error" ng-show="editForm.mail.$error.email">正しいメールアドレスを入力してください。</span><br />
 		</div>
@@ -161,18 +161,26 @@
 		<div class="control-group">
 		<label class="control-label">Twitter</label>
 		<div class="controls">
-		<input type="text" name="twitterId" class="input4edit span3" placeholder="Enter your Twitter ID" ng-model="input.twitterId" required ng-pattern="/(@[A-Za-z0-9_]{1,15})/" />
+		<input type="text" name="twitterId" class="input4edit span3" placeholder="Enter Twitter ID" ng-model="input.twitterId" required ng-pattern="/(@[A-Za-z0-9_]{1,15})/" />
 		<span class="error" ng-show="editForm.twitterId.$error.pattern">@英数字を入力してください。（15文字以内）</span><br />
 		</div>
 		</div>
 		
 		<div class="control-group">
-		<label class="control-label">民管理権限</label>
 		<div class="controls">
 		<label class="radio inline">
 		  <input type="radio" name="admin" class="input4edit" value="true" ng-model="input.admin" required> 管理者</label>
 		<label class="radio inline">
 		  <input type="radio" name="admin" class="input4edit" value="false" ng-model="input.admin" required> 一般</label>
+		</div>
+		</div>
+		
+		<div class="control-group">
+		<div class="controls">
+		<label class="radio inline">
+		  <input type="radio" name="deletedDate" class="input4edit" value="true" ng-model="input.deletedDate" required> 削除</label>
+		<label class="radio inline">
+		  <input type="radio" name="deletedDate" class="input4edit" value="false" ng-model="input.deletedDate" required> 有効</label>
 		</div>
 		</div>
 		
